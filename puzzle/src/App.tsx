@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ROWS = 4;
+const ROWS = 5;
 const COLS = 4;
 const TOTAL_TILES = ROWS * COLS;
 type Board = number[];
@@ -88,35 +88,41 @@ function App({}: AppProps) {
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col justify-center items-center p-2 sm:p-4 lg:p-8">
       {isWinning() && (
-        <div className="mb-4 sm:mb-6 p-3 sm:p-6 bg-gradient-to-r from-green-400 to-emerald-500 text-white rounded-xl sm:rounded-2xl shadow-lg animate-pulse w-full max-w-xs sm:max-w-lg">
+        <div className="mb-4 sm:mb-6 p-3 sm:p-6 bg-gradient-to-r from-green-400 to-emerald-500 text-white rounded-xl sm:rounded-2xl shadow-lg animate-pulse w-full max-w-sm sm:max-w-2xl">
           <div className="flex items-center justify-center gap-2 sm:gap-3">
             <span className="text-lg sm:text-3xl">🎉</span>
             <span className="text-sm sm:text-lg font-semibold text-center">
               <span className="block sm:hidden">Puzzle Solved!</span>
-              <span className="hidden sm:block">Congratulations! You solved the puzzle!</span>
+              <span className="hidden sm:block">
+                Congratulations! You solved the puzzle!
+              </span>
             </span>
             <span className="text-lg sm:text-3xl">🎉</span>
           </div>
         </div>
       )}
 
-      <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-3 sm:p-6 lg:p-6 w-full max-w-xs sm:max-w-lg  flex flex-col items-center">
-        <section className="bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl sm:rounded-2xl shadow-inner p-2 sm:p-3 grid grid-cols-4 gap-1 sm:gap-2 lg:gap-3  w-fit">
+      <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-3 sm:p-6 lg:p-8 w-full max-w-sm sm:max-w-2xl lg:max-w-4xl flex flex-col items-center">
+        <section
+          className="bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl sm:rounded-2xl shadow-inner p-2 sm:p-3 lg:p-4 grid gap-1 sm:gap-2 lg:gap-3"
+          style={{ gridTemplateColumns: `repeat(${COLS}, minmax(0, 1fr))` }}
+        >
           {board.map((tile, index) => (
             <div
               key={index}
               onClick={() => handleTileClick(index)}
               className={`
-                w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24
+                w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24
                 flex justify-center items-center font-bold 
-                text-sm sm:text-base lg:text-xl
+                text-xs sm:text-sm md:text-base lg:text-xl
                 rounded-lg sm:rounded-xl cursor-pointer 
                 transition-all duration-200 transform 
                 hover:scale-105 active:scale-95 shadow-lg 
                 select-none touch-manipulation
-                ${tile === 0 
-                  ? "bg-slate-300 shadow-inner" 
-                  : "bg-gradient-to-br from-red-400 to-red-600 text-white hover:from-red-500 hover:to-red-700"
+                ${
+                  tile === 0
+                    ? "bg-slate-300 shadow-inner"
+                    : "bg-gradient-to-br from-red-400 to-red-600 text-white hover:from-red-500 hover:to-red-700"
                 }
               `}
             >
