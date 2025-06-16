@@ -85,72 +85,52 @@ function App({}: AppProps) {
     return board[TOTAL_TILES - 1] === 0;
   };
 
-  const getTileSize = () => {
-    const maxWidth = Math.min(600, window.innerWidth - 100);
-    const maxHeight = Math.min(600, window.innerHeight - 300);
-    
-    const tileWidth = Math.floor((maxWidth - (COLS + 1) * 12) / COLS);
-    const tileHeight = Math.floor((maxHeight - (ROWS + 1) * 12) / ROWS);
-    
-    const size = Math.min(tileWidth, tileHeight, 120);
-    return Math.max(size, 30);
-  };
-
-  const tileSize = getTileSize();
-  const boardWidth = COLS * tileSize + (COLS + 1) * 12;
-  const boardHeight = ROWS * tileSize + (ROWS + 1) * 12;
-  const fontSize = Math.min(tileSize / 3, 24);
-
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col justify-center items-center p-4">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col justify-center items-center p-2 sm:p-4 lg:p-8">
       {isWinning() && (
-        <div className="mb-6 p-6 bg-gradient-to-r from-green-400 to-emerald-500 text-white rounded-2xl shadow-lg border-0 animate-pulse">
-          <div className="flex items-center justify-center gap-3">
-            <span className="text-3xl">🎉</span>
-            <span className="text-lg font-semibold">Congratulations! You solved the puzzle!</span>
-            <span className="text-3xl">🎉</span>
+        <div className="mb-4 sm:mb-6 p-3 sm:p-6 bg-gradient-to-r from-green-400 to-emerald-500 text-white rounded-xl sm:rounded-2xl shadow-lg animate-pulse w-full max-w-xs sm:max-w-lg">
+          <div className="flex items-center justify-center gap-2 sm:gap-3">
+            <span className="text-lg sm:text-3xl">🎉</span>
+            <span className="text-sm sm:text-lg font-semibold text-center">
+              <span className="block sm:hidden">Puzzle Solved!</span>
+              <span className="hidden sm:block">Congratulations! You solved the puzzle!</span>
+            </span>
+            <span className="text-lg sm:text-3xl">🎉</span>
           </div>
         </div>
       )}
 
-      <div className="bg-white rounded-3xl shadow-2xl p-6 sm:p-8">
-        <section 
-          className="bg-gradient-to-br from-slate-700 to-slate-800 rounded-2xl shadow-inner mx-auto"
-          style={{
-            width: `${boardWidth}px`,
-            height: `${boardHeight}px`,
-            display: 'grid',
-            gridTemplateColumns: `repeat(${COLS}, 1fr)`,
-            gap: '12px',
-            padding: '12px'
-          }}
-        >
+      <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-3 sm:p-6 lg:p-6 w-full max-w-xs sm:max-w-lg  flex flex-col items-center">
+        <section className="bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl sm:rounded-2xl shadow-inner p-2 sm:p-3 grid grid-cols-4 gap-1 sm:gap-2 lg:gap-3  w-fit">
           {board.map((tile, index) => (
             <div
               key={index}
               onClick={() => handleTileClick(index)}
-              className={`flex justify-center items-center font-bold rounded-xl cursor-pointer transition-all duration-200 transform hover:scale-105 shadow-lg ${
-                tile === 0 
+              className={`
+                w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24
+                flex justify-center items-center font-bold 
+                text-sm sm:text-base lg:text-xl
+                rounded-lg sm:rounded-xl cursor-pointer 
+                transition-all duration-200 transform 
+                hover:scale-105 active:scale-95 shadow-lg 
+                select-none touch-manipulation
+                ${tile === 0 
                   ? "bg-slate-300 shadow-inner" 
-                  : "bg-gradient-to-br from-red-400 to-red-600 text-white hover:from-red-500 hover:to-red-700 active:scale-95"
-              }`}
-              style={{
-                width: `${tileSize}px`,
-                height: `${tileSize}px`,
-                fontSize: `${fontSize}px`
-              }}
+                  : "bg-gradient-to-br from-red-400 to-red-600 text-white hover:from-red-500 hover:to-red-700"
+                }
+              `}
             >
               {tile !== 0 ? tile : ""}
             </div>
           ))}
         </section>
 
-        <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+        <div className="mt-4 sm:mt-6 flex justify-center">
           <button
             onClick={randomizeBoard}
-            className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white text-lg font-semibold rounded-xl hover:from-emerald-600 hover:to-green-700 transform hover:scale-105 transition-all duration-200 shadow-lg active:scale-95"
+            className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white text-sm sm:text-lg font-semibold rounded-lg sm:rounded-xl hover:from-emerald-600 hover:to-green-700 transform hover:scale-105 transition-all duration-200 shadow-lg active:scale-95 touch-manipulation"
           >
-            🎲 Randomize
+            <span className="">🎲 Randomize</span>
           </button>
         </div>
       </div>
